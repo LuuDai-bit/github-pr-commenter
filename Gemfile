@@ -25,9 +25,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'database_cleaner'
-  gem 'rails-controller-testing'
-  gem 'shoulda-matchers'
-  gem 'simplecov', require: false
-  gem 'simplecov-lcov', require: false
+  gem "database_cleaner"
+  gem "rails-controller-testing"
+  gem "shoulda-matchers"
+  gem "simplecov", require: false
+  gem "simplecov-lcov", require: false
 end

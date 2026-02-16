@@ -7,10 +7,10 @@ RSpec.configure do |config|
 
   config.before(:each) do |example|
     DatabaseCleaner.strategy = if example.metadata[:force_truncation_strategy]
-                                 :truncation
-                               else
-                                 :transaction
-                               end
+      :truncation
+    else
+      :transaction
+    end
   end
 
   config.before(:each) do
