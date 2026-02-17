@@ -1,6 +1,6 @@
-class CommentsController < ApplicationController
+class Api::V1::CommentsController < ApplicationController
   def create
-    github_auth_token = GithubAuthToken.active_token&.token
+    github_auth_token = GithubAuthToken.where("expire_date > ?", Time.current).last&.token
 
     if github_auth_token.blank?
       github_auth_token = GetGithubAuthTokenService.run
