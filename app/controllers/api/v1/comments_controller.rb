@@ -1,13 +1,15 @@
 class CommentsController < ApplicationController
   def create
-    github_auth_token = GithubAuthToken.active_token
+    github_auth_token = GithubAuthToken.active_token&.token
 
     if github_auth_token.blank?
-      # Generate JWT
-      # Call get auth token api
+      github_auth_token = GetGithubAuthTokenService.run
     end
 
-    # Push comment job to job queue
-    # Return jid, message
+    data = { project_coverage: "70%", patch_coverage: "90%", is_passed: true }
+    message = FormatMessageService.run(data)
+    jid = SendCommentJob.perform_async
+
+    render json: { message: "The comment has been queued", job_id: jid }
   end
 end
