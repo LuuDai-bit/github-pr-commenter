@@ -21,7 +21,7 @@ class GetGithubAuthTokenService < BaseService
   private
 
   def generate_jwt
-    key_file_path = Rails.root.join('github_key.pem')
+    key_file_path = Rails.root.join("github_key.pem")
 
     raise FileNotFound unless File.exist?(key_file_path)
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BaseService
-  def self.run *args
+  def self.run(*args)
     new(*args).run
   end
 

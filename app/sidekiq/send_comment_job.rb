@@ -3,7 +3,7 @@ require "httparty"
 class SendCommentJob
   include Sidekiq::Job
 
-  def perform(github_auth_token, owner="LuuDai-bit", repo="blog", issue_number=57, message)
+  def perform(github_auth_token, owner = "LuuDai-bit", repo = "blog", issue_number = 57, message)
     url = "https://api.github.com/repos/#{owner}/#{repo}/issues/#{issue_number}/comments"
 
     @response = HTTParty.post(url,
