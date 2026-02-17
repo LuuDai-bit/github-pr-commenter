@@ -6,10 +6,23 @@ class CommentsController < ApplicationController
       github_auth_token = GetGithubAuthTokenService.run
     end
 
-    data = { project_coverage: "70%", patch_coverage: "90%", is_passed: true }
+    data = {
+      project_coverage: "#{params[:project_coverage]}%",
+      patch_coverage: "#{params[:patch_coverage]}%",
+      is_passed: is_passed
+    }
+
     message = FormatMessageService.run(data)
     jid = SendCommentJob.perform_async
 
     render json: { message: "The comment has been queued", job_id: jid }
+  end
+
+  private
+
+  def is_passed
+    return true if params[:patch_coverage] > 90
+
+    false
   end
 end
