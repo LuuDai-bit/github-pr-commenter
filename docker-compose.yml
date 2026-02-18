@@ -20,7 +20,7 @@ services:
   sidekiq:
     container_name: comment_bot_sidekiq
     image: comment_bot_image:latest
-    command: bash -c "bundle i && bundle exec sidekiq"
+    command: bash -c "bundle install && bundle exec sidekiq"
     restart: always
     volumes:
       - .:/github-pr-commenter

@@ -4,7 +4,7 @@ RUN apt-get update -qq && apt-get install -y build-essential \
 postgresql-contrib \
 libpq-dev \
 postgresql-client \
-imagemagick vim \
+vim \
 sudo \
 cron \
 systemd \
@@ -12,12 +12,12 @@ libvips42
 
 RUN systemctl enable cron
 
-RUN mkdir /blog
-WORKDIR /blog
+RUN mkdir /github-pr-commenter
+WORKDIR /github-pr-commenter
 
 RUN gem install bundler -no-rdoc -no-ri
-COPY Gemfile /blog/Gemfile
-COPY Gemfile.lock /blog/Gemfile.lock
+COPY Gemfile /github-pr-commenter/Gemfile
+COPY Gemfile.lock /github-pr-commenter/Gemfile.lock
 RUN bundle install
 
 EXPOSE 3000
