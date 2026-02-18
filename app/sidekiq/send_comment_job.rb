@@ -9,8 +9,6 @@ class SendCommentJob
     @response = HTTParty.post(url,
                               headers: headers(github_auth_token),
                               body: body(message))
-
-    puts response
   end
 
   private
