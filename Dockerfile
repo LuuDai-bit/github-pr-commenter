@@ -6,11 +6,8 @@ libpq-dev \
 postgresql-client \
 vim \
 sudo \
-cron \
 systemd \
 libvips42
-
-RUN systemctl enable cron
 
 RUN mkdir /github-pr-commenter
 WORKDIR /github-pr-commenter
