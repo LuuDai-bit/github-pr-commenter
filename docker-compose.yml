@@ -1,0 +1,38 @@
+services:
+  app:
+    container_name: comment_bot
+    build:
+      context: .
+      dockerfile: /Dockerfile
+    image: comment_bot_image:latest
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/github-pr-commenter
+    ports:
+      - "3002:3000"
+    networks:
+      - blog_internal
+    env_file:
+      - .env
+    tty: true
+    stdin_open: true
+
+  sidekiq:
+    container_name: comment_bot_sidekiq
+    image: comment_bot_image:latest
+    command: bash -c "bundle i && bundle exec sidekiq"
+    restart: always
+    volumes:
+      - .:/github-pr-commenter
+    depends_on:
+      - app
+    networks:
+      - blog_internal
+    environment:
+      - RAILS_ENV=production
+    env_file:
+      - .env
+
+networks:
+  blog_internal:
+    external: true
