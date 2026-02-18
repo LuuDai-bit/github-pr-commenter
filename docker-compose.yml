@@ -1,11 +1,11 @@
 services:
-  app:
+  app_bot:
     container_name: comment_bot
     build:
       context: .
       dockerfile: ./Dockerfile
     image: comment_bot_image:latest
-    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails s -p 3000"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails s -b 0.0.0.0 -p 3000"
     volumes:
       - .:/github-pr-commenter
     ports:
@@ -17,7 +17,7 @@ services:
     tty: true
     stdin_open: true
 
-  sidekiq:
+  sidekiq_bot:
     container_name: comment_bot_sidekiq
     image: comment_bot_image:latest
     command: bash -c "bundle install && bundle exec sidekiq"
@@ -25,7 +25,7 @@ services:
     volumes:
       - .:/github-pr-commenter
     depends_on:
-      - app
+      - app_bot
     networks:
       - blog_internal
     environment:
