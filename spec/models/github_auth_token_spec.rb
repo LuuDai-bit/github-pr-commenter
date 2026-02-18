@@ -20,7 +20,7 @@ RSpec.describe GithubAuthToken, type: :model do
       it "should return 1 active token" do
         tokens = subject
 
-        expect(tokens.pluck(:id)).to eq [active_token.id]
+        expect(tokens.pluck(:id)).to eq [ active_token.id ]
       end
     end
   end
