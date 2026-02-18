@@ -13,7 +13,7 @@ class Api::V1::CommentsController < ApplicationController
     }
 
     message = FormatMessageService.run(data)
-    jid = SendCommentJob.perform_async(github_auth_token, "LuuDai-bit", "blog", 57, message)
+    jid = SendCommentJob.perform_async(github_auth_token, "LuuDai-bit", "blog", params[:pull_request_number], message)
 
     render json: { message: "The comment has been queued", job_id: jid }
   end

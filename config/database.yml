@@ -11,40 +11,13 @@ development:
   primary:
     <<: *default
     database: commenter_development
-  cache:
-    <<: *default
-    database: commenter_cache_development
-  queue:
-    <<: *default
-    database: commenter_queue_development
-  cable:
-    <<: *default
-    database: commenter_cable_development
 
 test:
   primary:
     <<: *default
     database: commenter_test
-  cache:
-    <<: *default
-    database: commenter_cache_test
-  queue:
-    <<: *default
-    database: commenter_queue_test
-  cable:
-    <<: *default
-    database: commenter_cable_test
 
 production:
   primary:
     <<: *default
     database: commenter_production
-  cache:
-    <<: *default
-    database: commenter_cache_production
-  queue:
-    <<: *default
-    database: commenter_queue_production
-  cable:
-    <<: *default
-    database: commenter_cable_production
