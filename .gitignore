@@ -33,3 +33,4 @@
 
 github_key.pem
 secret.github.app
+coverage/*

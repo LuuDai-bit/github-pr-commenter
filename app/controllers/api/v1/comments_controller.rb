@@ -21,7 +21,7 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def is_passed
-    return true if params[:patch_coverage] > 90
+    return true if params[:patch_coverage].to_i > 90
 
     false
   end
