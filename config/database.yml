@@ -8,13 +8,16 @@ default: &default
   password: <%= ENV['DB_PASSWORD'] %>
 
 development:
-  <<: *default
-  database: commenter_development
+  primary:
+    <<: *default
+    database: commenter_development
 
 test:
-  <<: *default
-  database: commenter_test
+  primary:
+    <<: *default
+    database: commenter_test
 
 production:
-  <<: *default
-  database: commenter_production
+  primary:
+    <<: *default
+    database: commenter_production
