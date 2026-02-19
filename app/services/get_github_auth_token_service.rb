@@ -5,6 +5,11 @@ class GetGithubAuthTokenService < BaseService
   class FetchError < StandardError; end
   class FileNotFound < StandardError; end
 
+  def initialize(owner, repo)
+    @owner = owner
+    @repo = repo
+  end
+
   def run
     jwt = generate_jwt
     installation_id = get_installation_id(jwt)
@@ -19,6 +24,8 @@ class GetGithubAuthTokenService < BaseService
   end
 
   private
+
+  attr_reader :owner, :repo
 
   def generate_jwt
     key_file_path = Rails.root.join("github_key.pem")
@@ -38,9 +45,6 @@ class GetGithubAuthTokenService < BaseService
   end
 
   def get_installation_id(jwt)
-    # TODO: Fixed value, fix later
-    owner = "LuuDai-bit"
-    repo = "blog"
     url = "https://api.github.com/repos/#{owner}/#{repo}/installation"
 
     response = HTTParty.get(url, headers: headers(jwt))

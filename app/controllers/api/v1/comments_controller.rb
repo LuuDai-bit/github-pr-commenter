@@ -3,7 +3,7 @@ class Api::V1::CommentsController < ApplicationController
     github_auth_token = GithubAuthToken.active_token.last&.token
 
     if github_auth_token.blank?
-      github_auth_token = GetGithubAuthTokenService.run
+      github_auth_token = GetGithubAuthTokenService.run(params[:owner], params[:repo])
     end
 
     data = {
