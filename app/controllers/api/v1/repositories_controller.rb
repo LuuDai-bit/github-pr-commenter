@@ -19,7 +19,7 @@ class Api::V1::RepositoriesController < ApplicationController
 
   def repository_params
     params.require(:repository).permit(:owner, :name).tap do |param|
-      param[:added_method] = 'manual'
+      param[:added_method] = "manual"
     end
   end
 end

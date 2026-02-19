@@ -9,7 +9,7 @@ RSpec.describe Api::V1::RepositoriesController, type: :controller do
 
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response['data'].map { |r| r['id'] }).to eq([repository.id])
+      expect(json_response['data'].map { |r| r['id'] }).to eq([ repository.id ])
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe Api::V1::RepositoriesController, type: :controller do
 
         expect(response.status).to eq 422
         json_response = JSON.parse(response.body)
-        expect(json_response["errors"]).to eq ["Name can't be blank"]
+        expect(json_response["errors"]).to eq [ "Name can't be blank" ]
       end
     end
   end

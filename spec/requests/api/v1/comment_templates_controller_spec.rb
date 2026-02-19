@@ -10,7 +10,7 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
 
       expect(response).to have_http_status(:ok)
       json_response = JSON.parse(response.body)
-      expect(json_response['data'].map { |r| r['id'] }).to eq([comment_template.id])
+      expect(json_response['data'].map { |r| r['id'] }).to eq([ comment_template.id ])
     end
   end
 
