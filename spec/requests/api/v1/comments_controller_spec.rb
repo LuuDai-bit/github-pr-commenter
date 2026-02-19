@@ -5,7 +5,10 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     let(:params) do
       {
         project_coverage: 80,
-        patch_coverage: 90
+        patch_coverage: 90,
+        owner: "test_owner",
+        repo: "test_repo",
+        pull_request_number: 1
       }
     end
 
@@ -23,6 +26,10 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
 
           json_response = JSON.parse(response.body)
           expect(json_response["message"]).to eq "The comment has been queued"
+        end
+
+        it "should add new repository record" do
+          expect { subject }.to change(Repository, :count).by(1)
         end
       end
 
