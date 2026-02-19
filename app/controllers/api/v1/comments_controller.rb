@@ -3,7 +3,7 @@ class Api::V1::CommentsController < ApplicationController
     github_auth_token = GithubAuthToken.active_token.last&.token
 
     if github_auth_token.blank?
-      github_auth_token = GetGithubAuthTokenService.run
+      github_auth_token = GetGithubAuthTokenService.run(params[:owner], params[:repo])
     end
 
     data = {
@@ -13,7 +13,7 @@ class Api::V1::CommentsController < ApplicationController
     }
 
     message = FormatMessageService.run(data)
-    jid = SendCommentJob.perform_async(github_auth_token, "LuuDai-bit", "blog", params[:pull_request_number], message)
+    jid = SendCommentJob.perform_async(github_auth_token, params[:owner], params[:repo], params[:pull_request_number], message)
 
     render json: { message: "The comment has been queued", job_id: jid }
   end
