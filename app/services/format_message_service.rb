@@ -1,6 +1,7 @@
 class FormatMessageService < BaseService
-  def initialize(data)
+  def initialize(data, comment_template)
     @data = data
+    @comment_template = comment_template
   end
 
   def run
@@ -9,11 +10,10 @@ class FormatMessageService < BaseService
 
   private
 
-  attr_reader :data
+  attr_reader :data, :comment_template
 
   def raw_message
-    # TODO: Flow 2 should allow to pull it out from database and fill data accordingly
-    @raw_message ||= <<~TEXT
+    default_message ||= <<~TEXT
       ## Coverage Report
 
       Project: &:project_coverage
@@ -21,6 +21,8 @@ class FormatMessageService < BaseService
 
       ?:is_passed
     TEXT
+
+    @raw_message ||= comment_template || default_message
   end
 
   # The format for variable should flow this pattern ?:variable_name for boolean

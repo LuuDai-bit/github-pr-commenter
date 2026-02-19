@@ -12,7 +12,9 @@ class Api::V1::CommentsController < ApplicationController
       is_passed: is_passed
     }
 
-    message = FormatMessageService.run(data)
+    repository = Repository.find_by(owner: params[:owner], name: params[:repo])
+    comment_template = repository.comment_templates.active.last&.content
+    message = FormatMessageService.run(data, comment_template)
     jid = SendCommentJob.perform_async(github_auth_token, params[:owner], params[:repo], params[:pull_request_number], message)
     create_repository_if_not_exists(params[:owner], params[:repo])
 
@@ -22,9 +24,7 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def is_passed
-    return true if params[:patch_coverage].to_i > 90
-
-    false
+    params[:patch_coverage].to_i > 90
   end
 
   def create_repository_if_not_exists(owner, repo)
