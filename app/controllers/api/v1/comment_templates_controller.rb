@@ -1,5 +1,5 @@
 class Api::V1::CommentTemplatesController < ApplicationController
-  before_action :set_repository, only: [:create, :update]
+  before_action :set_repository, only: %i[ create update ]
 
   def index
     @pagy, @comment_templates = pagy(CommentTemplate.order(id: :desc), limit: params[:per_page])
