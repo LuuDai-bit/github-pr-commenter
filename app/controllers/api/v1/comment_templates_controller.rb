@@ -1,10 +1,10 @@
 class Api::V1::CommentTemplatesController < ApplicationController
-  before_action :set_repository
+  before_action :set_repository, only: [:create, :update]
 
   def index
-    @comment_templates = @repository.comment_templates
+    @pagy, @comment_templates = pagy(CommentTemplate.order(id: :desc), limit: params[:per_page])
 
-    render json: { data: @comment_templates }
+    render json: { data: @comment_templates, meta: pagy_metadata(@pagy) }
   end
 
   def create

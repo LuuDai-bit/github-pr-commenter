@@ -18,6 +18,7 @@ gem "thruster", require: false
 gem "httparty"
 gem "jwt"
 gem "sidekiq"
+gem "pagy"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
