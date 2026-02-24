@@ -55,4 +55,19 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
       })
     end
   end
+
+  describe "GET #show" do
+    it "returns the details of a specific comment template" do
+      get :show, params: { id: comment_template.id }
+
+      expect(response).to have_http_status(:ok)
+      json_response = JSON.parse(response.body)
+      expect(json_response['data']).to include({
+        "id" => comment_template.id,
+        "content" => comment_template.content,
+        "status" => comment_template.status,
+        "repository_id" => repository.id
+      })
+    end
+  end
 end

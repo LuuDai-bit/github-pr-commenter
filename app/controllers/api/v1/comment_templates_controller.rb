@@ -1,6 +1,4 @@
 class Api::V1::CommentTemplatesController < ApplicationController
-  before_action :set_repository, only: %i[ create update ]
-
   def index
     @pagy, @comment_templates = pagy(CommentTemplate.order(id: :desc), limit: params[:per_page])
 
@@ -8,7 +6,7 @@ class Api::V1::CommentTemplatesController < ApplicationController
   end
 
   def create
-    @comment_template = @repository.comment_templates.new(comment_template_params)
+    @comment_template = CommentTemplate.new(comment_template_params)
     if @comment_template.save
       render json: @comment_template, status: :created
     else
@@ -17,7 +15,7 @@ class Api::V1::CommentTemplatesController < ApplicationController
   end
 
   def update
-    @comment_template = @repository.comment_templates.find(params[:id])
+    @comment_template = CommentTemplate.find(params[:id])
     if @comment_template.update(comment_template_params)
       render json: @comment_template
     else
@@ -25,11 +23,13 @@ class Api::V1::CommentTemplatesController < ApplicationController
     end
   end
 
-  private
+  def show
+    @comment_template = CommentTemplate.find(params[:id])
 
-  def set_repository
-    @repository = Repository.find(params[:repository_id])
+    render json: { data: @comment_template }
   end
+
+  private
 
   def comment_template_params
     params.require(:comment_template).permit(:content, :status)
