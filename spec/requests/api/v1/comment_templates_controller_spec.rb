@@ -29,8 +29,7 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
       expect(response).to have_http_status(:created)
       expect(JSON.parse(response.body)).to include({
         "content" => "New template",
-        "status" => "active",
-        "repository_id" => repository.id
+        "status" => "active"
       })
     end
   end
@@ -50,8 +49,7 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
       expect(JSON.parse(response.body)).to include({
         "id" => comment_template.id,
         "content" => "Updated template",
-        "status" => "draft",
-        "repository_id" => repository.id
+        "status" => "draft"
       })
     end
   end

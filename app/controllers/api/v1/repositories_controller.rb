@@ -1,8 +1,9 @@
 class Api::V1::RepositoriesController < ApplicationController
   def index
     repositories = Repository.all
+    serializer = ActiveModelSerializers::SerializableResource.new(repositories, each_serializer: RepositorySerializer)
 
-    render json: { data: repositories }, status: :ok
+    render json: { data: serializer }, status: :ok
   end
 
   def create
