@@ -42,7 +42,7 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
         comment_template: {
           content: "Updated template",
           status: "draft",
-          repository_id: repository.id,
+          repository_id: repository.id
         }
       }
 

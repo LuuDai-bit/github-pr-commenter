@@ -35,9 +35,9 @@ class Api::V1::CommentTemplatesController < ApplicationController
     @comment_template = CommentTemplate.find(params[:id])
 
     if @comment_template.destroy
-      render json: { message: 'Comment template deleted successfully' }
+      render json: { message: "Comment template deleted successfully" }
     else
-      render json: { error: 'Failed to delete comment template' }, status: :unprocessable_entity
+      render json: { error: "Failed to delete comment template" }, status: :unprocessable_entity
     end
   end
 
