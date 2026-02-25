@@ -1,5 +1,5 @@
 class Api::V1::CommentTemplatesController < ApplicationController
-  before_action :load_comment_template, only: %i[show update destroy]
+  before_action :load_comment_template, only: %i[show update destroy make_active]
 
   def index
     @pagy, @comment_templates = pagy(CommentTemplate.order(id: :desc).includes(:repository),
@@ -40,6 +40,16 @@ class Api::V1::CommentTemplatesController < ApplicationController
     else
       render json: { error: "Failed to delete comment template" }, status: :unprocessable_entity
     end
+  end
+
+  def make_active
+    ActiveRecord::Base.transaction do
+      repository = @comment_template.repository
+      repository.comment_templates.update_all(status: :draft)
+      @comment_template.active!
+    end
+
+    render json: { message: "Change comment template to active successfully" }
   end
 
   private

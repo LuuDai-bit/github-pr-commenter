@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
   let(:repository) { create :repository }
-  let!(:comment_template) { create :comment_template, repository: repository }
+  let!(:comment_template) do
+    create :comment_template, repository: repository, status: :draft
+  end
 
   describe "GET #index" do
     it "returns a list of comment templates for the repository" do
@@ -79,6 +81,23 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
       expect(JSON.parse(response.body)).to include({
         "message" => "Comment template deleted successfully"
       })
+    end
+  end
+
+  describe "PATCH #make_active" do
+    let!(:another_comment_template) do
+      create :comment_template, repository: repository, status: :active
+    end
+
+    subject { patch :make_active, params: { id: comment_template.id } }
+
+    context "when success" do
+      it "should update comment template to active" do
+        subject
+
+        expect(another_comment_template.reload.status).to eq "draft"
+        expect(comment_template.reload.status).to eq "active"
+      end
     end
   end
 end
