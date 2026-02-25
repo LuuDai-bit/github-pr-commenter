@@ -34,4 +34,8 @@ class Api::V1::CommentTemplatesController < ApplicationController
   def comment_template_params
     params.require(:comment_template).permit(:content, :status)
   end
+
+  def load_comment_template
+    @comment_template = CommentTemplate.find(params[:id])
+  end
 end
