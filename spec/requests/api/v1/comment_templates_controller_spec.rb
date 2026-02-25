@@ -99,5 +99,17 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
         expect(comment_template.reload.status).to eq "active"
       end
     end
+
+    context "when comment template is already active" do
+      let(:comment_template) do
+        create :comment_template, repository: repository, status: :active
+      end
+
+      it "should not update comment template" do
+        subject
+
+        expect(comment_template.reload.status).to eq "active"
+      end
+    end
   end
 end

@@ -43,6 +43,8 @@ class Api::V1::CommentTemplatesController < ApplicationController
   end
 
   def make_active
+    return if @comment_template.active?
+
     ActiveRecord::Base.transaction do
       repository = @comment_template.repository
       repository.comment_templates.update_all(status: :draft)
