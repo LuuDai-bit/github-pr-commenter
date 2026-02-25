@@ -18,10 +18,10 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
     it "creates a new comment template for the repository" do
       expect {
         post :create, params: {
-          repository_id: repository.id,
           comment_template: {
             content: "New template",
-            status: "active"
+            status: "active",
+            repository_id: repository.id
           }
         }
       }.to change(CommentTemplate, :count).by(1)
@@ -38,11 +38,11 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
   describe "PATCH #update" do
     it "updates an existing comment template for the repository" do
       patch :update, params: {
-        repository_id: repository.id,
         id: comment_template.id,
         comment_template: {
           content: "Updated template",
-          status: "draft"
+          status: "draft",
+          repository_id: repository.id,
         }
       }
 
@@ -67,6 +67,19 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
         "content" => comment_template.content,
         "status" => comment_template.status,
         "repository_id" => repository.id
+      })
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "deletes a specific comment template" do
+      expect {
+        delete :destroy, params: { id: comment_template.id }
+      }.to change(CommentTemplate, :count).by(-1)
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to include({
+        "message" => "Comment template deleted successfully"
       })
     end
   end

@@ -1,4 +1,6 @@
 class Api::V1::CommentTemplatesController < ApplicationController
+  before_action :load_comment_template, only: %i[show update destroy]
+
   def index
     @pagy, @comment_templates = pagy(CommentTemplate.order(id: :desc), limit: params[:per_page])
 
@@ -29,10 +31,20 @@ class Api::V1::CommentTemplatesController < ApplicationController
     render json: { data: @comment_template }
   end
 
+  def destroy
+    @comment_template = CommentTemplate.find(params[:id])
+
+    if @comment_template.destroy
+      render json: { message: 'Comment template deleted successfully' }
+    else
+      render json: { error: 'Failed to delete comment template' }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def comment_template_params
-    params.require(:comment_template).permit(:content, :status)
+    params.require(:comment_template).permit(:content, :status, :repository_id)
   end
 
   def load_comment_template
