@@ -2,9 +2,10 @@ class Api::V1::CommentTemplatesController < ApplicationController
   before_action :load_comment_template, only: %i[show update destroy]
 
   def index
-    @pagy, @comment_templates = pagy(CommentTemplate.order(id: :desc), limit: params[:per_page])
-
-    render json: { data: @comment_templates, meta: pagy_metadata(@pagy) }
+    @pagy, @comment_templates = pagy(CommentTemplate.order(id: :desc).includes(:repository),
+                                     limit: params[:per_page])
+    serializer_comment_templates = ::ActiveModelSerializers::SerializableResource.new(@comment_templates, each_serializer: ::CommentTemplateSerializer)
+    render json: { data: serializer_comment_templates, meta: pagy_metadata(@pagy) }
   end
 
   def create
