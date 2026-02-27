@@ -85,13 +85,13 @@ RSpec.describe Api::V1::CommentTemplatesController, type: :controller do
   end
 
   describe "PATCH #make_active" do
-    let!(:another_comment_template) do
-      create :comment_template, repository: repository, status: :active
-    end
-
     subject { patch :make_active, params: { id: comment_template.id } }
 
     context "when success" do
+      let!(:another_comment_template) do
+        create :comment_template, repository: repository, status: :active
+      end
+
       it "should update comment template to active" do
         subject
 
