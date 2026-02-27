@@ -29,3 +29,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        comment_template:
+          attributes:
+            status:
+              taken: "Selected repository has already had one active template"
