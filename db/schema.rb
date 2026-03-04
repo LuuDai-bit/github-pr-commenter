@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_19_023400) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_03_073524) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -38,5 +38,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_19_023400) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "variables", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "format"
+    t.string "name", null: false
+    t.bigint "repository_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repository_id"], name: "index_variables_on_repository_id"
+  end
+
   add_foreign_key "comment_templates", "repositories"
+  add_foreign_key "variables", "repositories"
 end
