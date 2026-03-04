@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resources :comment_templates, except: %i[new edit] do
         patch :make_active, on: :member, to: "comment_templates#make_active"
       end
-      resources :repositories, only: %i[index create]
+      resources :repositories, only: %i[index create show]
       resources :variables, only: %i[index create update destroy]
     end
   end
