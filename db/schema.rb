@@ -45,8 +45,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_031240) do
     t.string "format"
     t.string "name", null: false
     t.bigint "repository_id", null: false
-    t.string "type", default: "string"
     t.datetime "updated_at", null: false
+    t.string "variable_type", default: "string"
     t.index ["repository_id"], name: "index_variables_on_repository_id"
   end
 
