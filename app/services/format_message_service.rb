@@ -34,9 +34,9 @@ class FormatMessageService < BaseService
       value = data[$1.to_sym] || "?:#{$1}"
 
       if boolean?(value) && value
-        data[$1.to_sym]['success']
+        data[$1.to_sym]["success"]
       elsif boolean?(value) && !value
-        data[$1.to_sym]['fail']
+        data[$1.to_sym]["fail"]
       end
     end
   end
