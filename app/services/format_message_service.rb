@@ -33,12 +33,10 @@ class FormatMessageService < BaseService
     end.gsub(/\?:(\w+)/) do
       value = data[$1.to_sym] || "?:#{$1}"
 
-      # TODO: Think about this later if the variable is dynamic
-      # and possible has more than 1 boolean
       if boolean?(value) && value
-        "✅ Passed"
+        data[$1.to_sym]['success']
       elsif boolean?(value) && !value
-        "❌ Below threshold"
+        data[$1.to_sym]['fail']
       end
     end
   end

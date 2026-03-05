@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_03_073524) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_05_031240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -39,10 +39,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_03_073524) do
   end
 
   create_table "variables", force: :cascade do |t|
+    t.string "boolean_false_message"
+    t.string "boolean_success_message"
     t.datetime "created_at", null: false
     t.string "format"
     t.string "name", null: false
     t.bigint "repository_id", null: false
+    t.string "type", default: "string"
     t.datetime "updated_at", null: false
     t.index ["repository_id"], name: "index_variables_on_repository_id"
   end
