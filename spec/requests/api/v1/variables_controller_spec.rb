@@ -20,20 +20,37 @@ RSpec.describe Api::V1::VariablesController, type: :controller do
         variable: {
           name: "Test variable",
           format: "test format",
-          repository_id: repository.id
+          repository_id: repository.id,
+          variable_type: variable_type,
+          boolean_false_message: "Fail",
+          boolean_success_message: "Success"
         }
       }
     end
+    let(:variable_type) { "string" }
 
     subject { post :create, params: params }
 
     context "when success" do
-      it "should return success message" do
-        subject
+      context "when variable type is string" do
+        it "should return success message" do
+          subject
 
-        expect(response.status).to eq 201
-        json_response = JSON.parse(response.body)
-        expect(json_response['id']).to eq Variable.last.id
+          expect(response.status).to eq 201
+          json_response = JSON.parse(response.body)
+          expect(json_response['id']).to eq Variable.last.id
+        end
+      end
+
+      context "when variable type is boolean" do
+        let(:variable_type) { "boolean" }
+        it "should return success message" do
+          subject
+
+          expect(response.status).to eq 201
+          json_response = JSON.parse(response.body)
+          expect(json_response['id']).to eq Variable.last.id
+        end
       end
     end
 

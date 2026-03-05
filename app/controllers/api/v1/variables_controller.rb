@@ -40,6 +40,8 @@ class Api::V1::VariablesController < ApplicationController
   end
 
   def variable_params
-    params.require(:variable).permit(:name, :format, :repository_id)
+    params.require(:variable).permit(:name, :format, :repository_id,
+                                     :variable_type, :boolean_false_message,
+                                     :boolean_success_message)
   end
 end
