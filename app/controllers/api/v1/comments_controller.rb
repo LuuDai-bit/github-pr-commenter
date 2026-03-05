@@ -7,14 +7,22 @@ class Api::V1::CommentsController < ApplicationController
     end
 
     data = {
-      project_coverage: "#{params[:project_coverage]}%",
-      patch_coverage: "#{params[:patch_coverage]}%",
+      project_coverage: params[:project_coverage],
+      patch_coverage: params[:patch_coverage],
       is_passed: is_passed
     }
 
     repository = create_repository_if_not_exists(params[:owner], params[:repo])
     comment_template = repository.comment_templates.active.last&.content
-    message = FormatMessageService.run(data, comment_template)
+    variables = repository.variables
+    formatted_variables = {}
+    variables.each do |variable|
+      value = data[variable.name.to_sym]
+      formatted_value = variable.formatted(value)
+
+      formatted_variables[variable.name] = formatted_value
+    end
+    message = FormatMessageService.run(formatted_variables, comment_template)
     jid = SendCommentJob.perform_async(github_auth_token, params[:owner], params[:repo], params[:pull_request_number], message)
 
     render json: { message: "The comment has been queued", job_id: jid }

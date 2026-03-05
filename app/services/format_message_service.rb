@@ -28,18 +28,8 @@ class FormatMessageService < BaseService
   # The format for variable should flow this pattern ?:variable_name for boolean
   # &:variable_name for string or number variable
   def formatted_string(message)
-    message.gsub(/&:(\w+)/) do
-      data[$1.to_sym] || "&:#{$1}"
-    end.gsub(/\?:(\w+)/) do
-      value = data[$1.to_sym] || "?:#{$1}"
-
-      # TODO: Think about this later if the variable is dynamic
-      # and possible has more than 1 boolean
-      if boolean?(value) && value
-        "✅ Passed"
-      elsif boolean?(value) && !value
-        "❌ Below threshold"
-      end
+    message.gsub(/[&?]:(\w+)/) do
+      data[$1.to_sym] || "NO VALUE"
     end
   end
 
