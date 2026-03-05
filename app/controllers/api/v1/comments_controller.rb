@@ -7,8 +7,8 @@ class Api::V1::CommentsController < ApplicationController
     end
 
     data = {
-      project_coverage: "#{params[:project_coverage]}%",
-      patch_coverage: "#{params[:patch_coverage]}%",
+      project_coverage: params[:project_coverage],
+      patch_coverage: {params[:patch_coverage],
       is_passed: is_passed
     }
 
