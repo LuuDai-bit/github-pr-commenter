@@ -10,6 +10,8 @@ class Variable < ApplicationRecord
   def formatted(value)
     return value if format.blank? && !boolean?
 
+    return "" if value.blank? && !boolean?
+
     if boolean?
       value ? boolean_success_message : boolean_false_message
     else

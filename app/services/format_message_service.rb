@@ -29,7 +29,7 @@ class FormatMessageService < BaseService
   # &:variable_name for string or number variable
   def formatted_string(message)
     message.gsub(/[&?]:(\w+)/) do
-      data[$1.to_sym] || "NO VALUE"
+      data[$1] || "NO VALUE"
     end
   end
 

@@ -35,6 +35,11 @@ RSpec.describe Variable, type: :model do
           formatted_value = variable.formatted("50")
           expect(formatted_value).to eq "50%"
         end
+
+        context "when value is nil" do
+          formatted_value = variable.formatted(nil)
+          expect(formatted_value).to eq ""
+        end
       end
 
       context "when boolean" do
