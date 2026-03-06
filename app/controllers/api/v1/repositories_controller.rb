@@ -2,12 +2,15 @@ class Api::V1::RepositoriesController < ApplicationController
   def index
     if params[:page].blank?
       repositories = Repository.all
+      serializer = ActiveModelSerializers::SerializableResource.new(repositories, each_serializer: RepositorySerializer)
+
+      render json: { data: serializer }
     else
       pagy, repositories = pagy(Repository.order(id: :desc))
-    end
-    serializer = ActiveModelSerializers::SerializableResource.new(repositories, each_serializer: RepositorySerializer)
+      serializer = ActiveModelSerializers::SerializableResource.new(repositories, each_serializer: RepositorySerializer)
 
-    render json: { data: serializer, meta: pagy_metadata(pagy) }, status: :ok
+      render json: { data: serializer, meta: pagy_metadata(pagy) }, status: :ok
+    end
   end
 
   def show

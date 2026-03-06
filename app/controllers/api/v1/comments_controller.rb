@@ -6,15 +6,10 @@ class Api::V1::CommentsController < ApplicationController
       github_auth_token = GetGithubAuthTokenService.run(params[:owner], params[:repo])
     end
 
-    data = {
-      project_coverage: params[:project_coverage],
-      patch_coverage: params[:patch_coverage],
-      is_passed: is_passed
-    }
-
     repository = create_repository_if_not_exists(params[:owner], params[:repo])
     comment_template = repository.comment_templates.active.last&.content
     variables = repository.variables
+    data = validated_params(variables.pluck(:name)).merge(is_passed: is_passed)
     formatted_variables = {}
     variables.each do |variable|
       value = data[variable.name.to_sym]
@@ -22,6 +17,7 @@ class Api::V1::CommentsController < ApplicationController
 
       formatted_variables[variable.name] = formatted_value
     end
+
     message = FormatMessageService.run(formatted_variables, comment_template)
     jid = SendCommentJob.perform_async(github_auth_token, params[:owner], params[:repo], params[:pull_request_number], message)
 
@@ -29,6 +25,10 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   private
+
+  def validated_params(variable_names)
+    params.require(:variables).permit(variable_names)
+  end
 
   def is_passed
     params[:patch_coverage].to_i > 90
