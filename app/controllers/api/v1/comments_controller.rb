@@ -17,7 +17,7 @@ class Api::V1::CommentsController < ApplicationController
 
       formatted_variables[variable.name] = formatted_value
     end
-    debugger
+
     message = FormatMessageService.run(formatted_variables, comment_template)
     jid = SendCommentJob.perform_async(github_auth_token, params[:owner], params[:repo], params[:pull_request_number], message)
 
