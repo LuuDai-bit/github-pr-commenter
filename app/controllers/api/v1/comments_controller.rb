@@ -12,7 +12,7 @@ class Api::V1::CommentsController < ApplicationController
     data = validated_params(variables.pluck(:name)).merge(is_passed: is_passed)
     formatted_variables = {}
     variables.each do |variable|
-      value = data[variable.name.to_sym]
+      value = data[variable.name]
       formatted_value = variable.formatted(value)
 
       formatted_variables[variable.name] = formatted_value
