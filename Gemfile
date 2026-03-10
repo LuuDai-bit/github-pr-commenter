@@ -8,6 +8,10 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+gem "grpc", "~> 1.60"
+gem "grpc-tools", "~> 1.60"
+gem "google-protobuf", "3.25"
+
 gem "bootsnap", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]

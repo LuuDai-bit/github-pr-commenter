@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package comment;
+
+service CommentService {
+  rpc CreateComment (CreateCommentRequest) returns (CreateCommentResponse);
+}
+
+message CreateCommentRequest {
+  string owner = 1;
+  string repo = 2;
+  int32 pullRequestNumber = 3;
+  map <string, string> variables = 4;
+}
+
+message CreateCommentResponse {
+  string message = 1;
+  string job_id = 2;
+}
