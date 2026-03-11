@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require_relative "../config/environment"
+
+$LOAD_PATH.unshift(File.expand_path("../lib/grpc", __dir__))
+
+require_relative "../lib/grpc/services/comment_service"
+require "grpc"
+require "logger"
+
+GRPC.logger = Logger.new(STDOUT)
+GRPC.logger.level = Logger::DEBUG
+
+server = GRPC::RpcServer.new
+
+server.add_http2_port("0.0.0.0:50051", :this_port_is_insecure)
+
+server.handle(CommentService)
+
+server.run_till_terminated
