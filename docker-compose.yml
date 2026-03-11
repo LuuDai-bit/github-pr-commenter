@@ -33,6 +33,23 @@ services:
     env_file:
       - .env
 
+  grpc:
+    container_name: comment_bot_grpc
+    image: comment_bot_image:latest
+    command: bash -c "bin/grpc_server"
+    volumes:
+      - .:/github-pr-commenter
+    ports:
+      - "50051:50051"
+    depends_on:
+      - app_bot
+    networks:
+      - blog_internal
+    environment:
+      - RAILS_ENV=production
+    env_file:
+      - .env
+
 networks:
   blog_internal:
     external: true
