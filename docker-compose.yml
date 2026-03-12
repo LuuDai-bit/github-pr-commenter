@@ -12,6 +12,8 @@ services:
       - "3002:3000"
     networks:
       - blog_internal
+    environment:
+      - RAILS_ENV=production
     env_file:
       - .env
     tty: true
