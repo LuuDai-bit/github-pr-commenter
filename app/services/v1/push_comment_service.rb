@@ -23,7 +23,7 @@ class V1::PushCommentService < BaseService
     end
 
     message = FormatMessageService.run(formatted_variables, comment_template)
-    SendCommentJob.perform_async(github_auth_token, params[:owner], params[:repo], params[:pull_request_number], message)
+    SendCommentJob.perform_later(github_auth_token, params[:owner], params[:repo], params[:pull_request_number], message)
   end
 
   private
