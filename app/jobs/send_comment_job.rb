@@ -1,7 +1,7 @@
 require "httparty"
 
-class SendCommentJob
-  include Sidekiq::Job
+class SendCommentJob < ApplicationJob
+  queue_as :default
 
   def perform(github_auth_token, owner = "LuuDai-bit", repo = "blog", issue_number = 57, message)
     url = "https://api.github.com/repos/#{owner}/#{repo}/issues/#{issue_number}/comments"
