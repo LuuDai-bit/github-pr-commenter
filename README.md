@@ -1,10 +1,11 @@
-# This is github commenter bot
+# This is GitHub commenter bot
 
-- A bot create comment base on the CI results
-- A website allow me to customize how your message look in github
+- A bot creates comment based on the CI results
+- A website allows me to customize how your message looks in GitHub
 - And manage my message pr commented through this
+- Manage variables and their format
 
 # Techstack:
 
-- Build with ruby 4.0.0
+- Build with Ruby 4.0.0
 - and Rails 8.1.2
