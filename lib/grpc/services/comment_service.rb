@@ -22,11 +22,11 @@ class CommentService < Comment::CommentService::Service
 
     message = FormatMessageService.run(formatted_variables, comment_template)
     Rails.logger.info message
-    jid = SendCommentJob.perform_async(github_auth_token, request.owner, request.repo, request.pullRequestNumber, message)
+    jid = SendCommentJob.perform_later(github_auth_token, request.owner, request.repo, request.pullRequestNumber, message)
 
     Comment::CreateCommentResponse.new(
       message: "success",
-      job_id: jid
+      job_id: ""
     )
   end
 

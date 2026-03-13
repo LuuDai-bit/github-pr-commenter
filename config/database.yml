@@ -17,7 +17,11 @@ test:
     <<: *default
     database: commenter_test
 
-production:
+production: &primary_production
   primary:
     <<: *default
-    database: commenter_production
+    database: commenter_development
+  queue:
+    <<: *default
+    database: commenter_production_queue
+    migrations_paths: db/queue_migrate
