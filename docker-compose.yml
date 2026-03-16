@@ -18,6 +18,22 @@ services:
       - .env
     tty: true
     stdin_open: true
+
+  job:
+    container_name: comment_bot_job
+    image: comment_bot_image:latest
+    command: bash -c "bin/jobs start"
+    volumes:
+      - .:/github-pr-commenter
+    depends_on:
+      - app_bot
+    networks:
+      - blog_internal
+    environment:
+      - RAILS_ENV=production
+    env_file:
+      - .env
+
   grpc:
     container_name: comment_bot_grpc
     image: comment_bot_image:latest
