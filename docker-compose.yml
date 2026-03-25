@@ -1,6 +1,7 @@
 services:
   app_bot:
     container_name: comment_bot
+    mem_limit: 250m
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -21,6 +22,7 @@ services:
 
   job:
     container_name: comment_bot_job
+    mem_limt: 250m
     image: comment_bot_image:latest
     command: bash -c "bin/jobs start"
     volumes:
@@ -36,6 +38,7 @@ services:
 
   grpc:
     container_name: comment_bot_grpc
+    mem_limit: 100m
     image: comment_bot_image:latest
     command: bash -c "bin/grpc_server"
     volumes:
