@@ -37,8 +37,10 @@ RSpec.describe Variable, type: :model do
         end
 
         context "when value is nil" do
-          formatted_value = variable.formatted(nil)
-          expect(formatted_value).to eq ""
+          it "should return blank formatted value" do
+            formatted_value = variable.formatted(nil)
+            expect(formatted_value).to eq ""
+          end
         end
       end
 
