@@ -1,6 +1,13 @@
 source "https://rubygems.org"
 
-gem "rails", "~> 8.1.2"
+# gem "rails", "~> 8.1.2"
+gem "activejob", "~> 8.1.2"
+gem "activerecord", "~> 8.1.2"
+gem "activesupport", "~> 8.1.2"
+gem "railties", "~> 8.1.2"
+gem "actionpack", "~> 8.1.2"
+gem "rack", "~> 3.2.5"
+
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 
@@ -19,7 +26,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "httparty"
 gem "jwt"
-gem "pagy"
+gem "pagy", "~> 43.4.2"
 gem "active_model_serializers"
 
 group :development, :test do

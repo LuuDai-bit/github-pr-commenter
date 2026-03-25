@@ -4,11 +4,13 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
   describe "POST #create" do
     let(:params) do
       {
-        project_coverage: 80,
-        patch_coverage: 90,
         owner: "test_owner",
         repo: "test_repo",
-        pull_request_number: 1
+        pull_request_number: 1,
+        variables: {
+          project_coverage: 80,
+          patch_coverage: 90,
+        }
       }
     end
 
@@ -17,7 +19,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
     context "when success" do
       before do
         allow(GetGithubAuthTokenService).to receive(:run).and_return "token"
-        allow(SendCommentJob).to receive(:perform_async).and_return "jid"
+        allow(SendCommentJob).to receive(:perform_later).and_return "jid"
       end
 
       context "without active github auth token" do
