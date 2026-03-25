@@ -22,7 +22,7 @@ services:
 
   job:
     container_name: comment_bot_job
-    mem_limt: 250m
+    mem_limit: 250m
     image: comment_bot_image:latest
     command: bash -c "bin/jobs start"
     volumes:
