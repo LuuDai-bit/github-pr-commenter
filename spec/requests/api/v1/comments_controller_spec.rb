@@ -9,7 +9,7 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         pull_request_number: 1,
         variables: {
           project_coverage: 80,
-          patch_coverage: 90,
+          patch_coverage: 90
         }
       }
     end
