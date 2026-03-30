@@ -113,7 +113,7 @@ GEM
     grpc (1.78.1-x86_64-linux-musl)
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
-    grpc-tools (1.78.1)
+    grpc-tools (1.80.0)
     httparty (0.24.2)
       csv
       mini_mime (>= 1.0.0)
@@ -347,7 +347,7 @@ DEPENDENCIES
   ffaker
   google-protobuf (~> 3.25.5)
   grpc (~> 1.60)
-  grpc-tools (~> 1.60)
+  grpc-tools (~> 1.80)
   httparty
   jwt
   kamal
@@ -412,7 +412,7 @@ CHECKSUMS
   grpc (1.78.1-aarch64-linux-musl) sha256=ba7d5b82cf935ffd2476196b53f5abce152f1e640fb2011d937a2a6965686e3b
   grpc (1.78.1-x86_64-linux-gnu) sha256=c0715fe9bc80cf21fbaca2713abf8db6f628f6f31ec1d8762b667151e6ab0c9f
   grpc (1.78.1-x86_64-linux-musl) sha256=4e90a3d0f2baa1cd70756ffe116bd81bb7b398ff774272828a23a89ac9a30b06
-  grpc-tools (1.78.1) sha256=0555a7d043fa8355828f6e11ca86a819cac729389e831c3e08fddbd3bfe5f3c0
+  grpc-tools (1.80.0) sha256=49076fbc7b34556365694202ed7ffd1e959e68ba8c339e99b437ba2a985a2cf2
   httparty (0.24.2) sha256=8fca6a54aa0c4aa4303a0fd33e5e2156175d6a5334f714263b458abd7fda9c38
   i18n (1.14.8) sha256=285778639134865c5e0f6269e0b818256017e8cde89993fdfcbfb64d088824a5
   io-console (0.8.2) sha256=d6e3ae7a7cc7574f4b8893b4fca2162e57a825b223a177b7afa236c5ef9814cc
