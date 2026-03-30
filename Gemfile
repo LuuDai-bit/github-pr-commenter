@@ -13,7 +13,7 @@ gem "puma", ">= 5.0"
 
 gem "solid_queue"
 
-gem "grpc", "~> 1.60"
+gem "grpc", "~> 1.80"
 gem "grpc-tools", "~> 1.60"
 gem "google-protobuf", "~> 3.25.5"
 
