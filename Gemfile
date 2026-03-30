@@ -26,7 +26,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "httparty"
 gem "jwt"
-gem "pagy", "~> 43.4.2"
+gem "pagy", "~> 43.4.4"
 gem "active_model_serializers"
 
 group :development, :test do
