@@ -5,7 +5,8 @@ RUN apk add --no-cache \
     postgresql-dev\
     vim \
     sudo \
-    yaml-dev
+    yaml-dev \
+    tzdata
 
 RUN mkdir /github-pr-commenter
 WORKDIR /github-pr-commenter
