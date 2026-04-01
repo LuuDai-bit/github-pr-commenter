@@ -24,7 +24,7 @@ services:
     container_name: comment_bot_job
     mem_limit: 250m
     image: comment_bot_image:latest
-    command: bash -c "bin/jobs start"
+    command: bash -c "bin/jobs start --mode async"
     volumes:
       - .:/github-pr-commenter
     depends_on:

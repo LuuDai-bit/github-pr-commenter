@@ -1,13 +1,11 @@
-FROM ruby:4.0-bookworm
+FROM ruby:4.0-alpine
 
-RUN apt-get update -qq && apt-get install -y build-essential \
-postgresql-contrib \
-libpq-dev \
-postgresql-client \
-vim \
-sudo \
-systemd \
-libvips42
+RUN apk add --no-cache \
+    build-base \
+    postgresql-dev\
+    vim \
+    sudo \
+    yaml-dev
 
 RUN mkdir /github-pr-commenter
 WORKDIR /github-pr-commenter
