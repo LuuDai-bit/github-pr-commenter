@@ -7,7 +7,7 @@ SimpleCov.formatters = [
 ]
 
 SimpleCov.start 'rails' do
-  coverage_dir = ['app/controllers', 'app/services', 'app/jobs', 'app/models']
+  coverage_dir = [ 'app/controllers', 'app/services', 'app/jobs', 'app/models' ]
   changed_files = `git diff --name-only HEAD origin/main`.split("\n")
   add_group "Changed" do |source_file|
     next unless coverage_dir.any? { |dir| source_file.filename.match?(dir) }
