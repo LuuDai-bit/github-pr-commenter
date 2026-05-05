@@ -6,7 +6,7 @@ gem "activerecord", "~> 8.1.2"
 gem "activesupport", "~> 8.1.2"
 gem "railties", "~> 8.1.2"
 gem "actionpack", "~> 8.1.2"
-gem "rack", "~> 3.2.5"
+gem "rack", "~> 3.2.6"
 
 gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
