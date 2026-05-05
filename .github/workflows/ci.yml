@@ -103,6 +103,8 @@ jobs:
           path: coverage/
 
       - name: Push comment
+        env:
+          CDH_API_TOKEN: ${{ secrets.COMMENTER }}
         run: |
           PROJECT_COVERAGE=$(ruby -rjson -e '
             data = JSON.parse(File.read("coverage/coverage.json"))
@@ -115,8 +117,6 @@ jobs:
           ')
 
           PR_NUMBER=${{ github.event.pull_request.number }}
-
-          CDH_API_TOKEN=${{ secrets.COMMENTER }}
 
           JSON=$(jq -n \
             --arg owner "${{ github.repository_owner }}" \
