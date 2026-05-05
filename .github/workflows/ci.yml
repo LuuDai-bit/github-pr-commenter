@@ -20,10 +20,10 @@ jobs:
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
-      
+
       - name: Scan for known security vulnerabilities in gems used
         run: bin/bundler-audit
-      
+
   lint:
     runs-on: ubuntu-latest
     env:
@@ -63,18 +63,14 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      # redis:
-      #   image: valkey/valkey:8
-      #   ports:
-      #     - 6379:6379
-      #   options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev
 
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -85,6 +81,55 @@ jobs:
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test
+        run: bin/rails db:test:prepare && bundle exec rspec
+
+      - name: Upload coverage
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+
+  push_comment:
+    needs: test
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    environment: GPrC
+
+    steps:
+      - name: Download coverage
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+
+      - name: Push comment
+        env:
+          CDH_API_TOKEN: ${{ secrets.COMMENTER }}
+        run: |
+          PROJECT_COVERAGE=$(ruby -rjson -e '
+            data = JSON.parse(File.read("coverage/coverage.json"))
+            puts data["groups"]["Project"]["lines"]["covered_percent"].round(2)
+          ')
+
+          PATCH_COVERAGE=$(ruby -rjson -e '
+            data = JSON.parse(File.read("coverage/coverage.json"))
+            puts data["groups"]["Changed"]["lines"]["covered_percent"].round(2)
+          ')
+
+          PR_NUMBER=${{ github.event.pull_request.number }}
+
+          JSON=$(jq -n \
+            --arg owner "${{ github.repository_owner }}" \
+            --arg repo "${{ github.event.repository.name }}" \
+            --argjson pr "$PR_NUMBER" \
+            --argjson project "$PROJECT_COVERAGE" \
+            --argjson patch "$PATCH_COVERAGE" \
+            '{project_coverage:$project, patch_coverage:$patch, pull_request_number:$pr, owner:$owner, repo:$repo}')
+
+          echo "Generated JSON: $JSON"
+
+          curl --location 'https://codedehoc.click/gateway/comments' \
+            --header "token: $CDH_API_TOKEN" \
+            --header 'Content-Type: application/json' \
+            --data "$JSON"
