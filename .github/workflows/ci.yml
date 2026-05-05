@@ -126,7 +126,7 @@ jobs:
             --argjson patch "$PATCH_COVERAGE" \
             '{project_coverage:$project, patch_coverage:$patch, pull_request_number:$pr, owner:$owner, repo:$repo}')
 
-          echo "Generated JSON: $JSON "
+          echo "Generated JSON: $JSON"
 
           curl --location 'https://codedehoc.click/gateway/comments' \
             --header "token: $CDH_API_TOKEN" \
